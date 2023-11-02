@@ -9,7 +9,6 @@ import com.meilisearch.integration.classes.AbstractIT;
 import com.meilisearch.integration.classes.TestData;
 import com.meilisearch.sdk.Index;
 import com.meilisearch.sdk.exceptions.MeilisearchApiException;
-import com.meilisearch.sdk.exceptions.MeilisearchException;
 import com.meilisearch.sdk.model.*;
 import com.meilisearch.sdk.utils.Movie;
 import java.lang.reflect.Modifier;
@@ -303,7 +302,7 @@ public class ClientTest extends AbstractIT {
      * @see <a href="https://github.com/meilisearch/meilisearch-java/issues/655">Issue #655</a>
      */
     @Test
-    public void testTransientFieldExclusion() throws MeilisearchException {
+    public void testTransientFieldExclusion() {
         Index test = client.index("Transient");
 
         Gson gsonWithTransient =

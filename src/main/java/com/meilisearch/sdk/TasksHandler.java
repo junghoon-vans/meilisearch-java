@@ -1,5 +1,6 @@
 package com.meilisearch.sdk;
 
+import com.meilisearch.sdk.exceptions.MeilisearchApiException;
 import com.meilisearch.sdk.exceptions.MeilisearchException;
 import com.meilisearch.sdk.exceptions.MeilisearchTimeoutException;
 import com.meilisearch.sdk.http.URLBuilder;
@@ -28,9 +29,9 @@ public class TasksHandler {
      *
      * @param taskUid Identifier of the requested Task
      * @return Task instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    Task getTask(int taskUid) throws MeilisearchException {
+    Task getTask(int taskUid) {
         URLBuilder urlb = new URLBuilder();
         urlb.addSubroute("tasks").addSubroute(Integer.toString(taskUid));
         String urlPath = urlb.getURL();
@@ -41,9 +42,9 @@ public class TasksHandler {
      * Retrieves all tasks from the client
      *
      * @return TasksResults containing a list of task instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    TasksResults getTasks() throws MeilisearchException {
+    TasksResults getTasks() {
         TasksResults result = httpClient.get(tasksPath().getURL(), TasksResults.class);
         return result;
     }
@@ -53,9 +54,9 @@ public class TasksHandler {
      *
      * @param param accept by the tasks route
      * @return TasksResults containing a list of task instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    TasksResults getTasks(TasksQuery param) throws MeilisearchException {
+    TasksResults getTasks(TasksQuery param) {
         TasksResults result =
                 httpClient.get(tasksPath().addQuery(param.toQuery()).getURL(), TasksResults.class);
         return result;
@@ -66,9 +67,9 @@ public class TasksHandler {
      *
      * @param indexUid Index identifier to index of the requested Tasks
      * @return TasksResults containing a list of task instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    TasksResults getTasks(String indexUid) throws MeilisearchException {
+    TasksResults getTasks(String indexUid) {
         URLBuilder urlb = tasksPath().addParameter("indexUid", indexUid);
 
         TasksResults result = httpClient.get(urlb.getURL(), TasksResults.class);
@@ -81,9 +82,9 @@ public class TasksHandler {
      * @param indexUid Index identifier to index of the requested Tasks
      * @param param accept by the tasks route
      * @return TasksResults containing a list of task instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    TasksResults getTasks(String indexUid, TasksQuery param) throws MeilisearchException {
+    TasksResults getTasks(String indexUid, TasksQuery param) {
         param = addIndexUidToQuery(indexUid, param);
 
         TasksResults result =
@@ -96,9 +97,9 @@ public class TasksHandler {
      *
      * @param param accept by the tasks route
      * @return Meilisearch API response as TaskInfo
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    TaskInfo cancelTasks(CancelTasksQuery param) throws MeilisearchException {
+    TaskInfo cancelTasks(CancelTasksQuery param) {
         URLBuilder urlb = tasksPath().addSubroute("cancel");
         TaskInfo result =
                 httpClient.post(urlb.addQuery(param.toQuery()).getURL(), null, TaskInfo.class);
@@ -110,9 +111,9 @@ public class TasksHandler {
      *
      * @param param accept by the tasks route
      * @return Meilisearch API response as TaskInfo
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    TaskInfo deleteTasks(DeleteTasksQuery param) throws MeilisearchException {
+    TaskInfo deleteTasks(DeleteTasksQuery param) {
         TaskInfo result =
                 httpClient.delete(tasksPath().addQuery(param.toQuery()).getURL(), TaskInfo.class);
         return result;
@@ -122,9 +123,9 @@ public class TasksHandler {
      * Waits for a task to be processed
      *
      * @param taskUid Identifier of the Task
-     * @throws MeilisearchException if timeout is reached
+     * @throws MeilisearchTimeoutException if timeout is reached
      */
-    void waitForTask(int taskUid) throws MeilisearchException {
+    void waitForTask(int taskUid) {
         this.waitForTask(taskUid, 5000, 50);
     }
 
@@ -134,9 +135,9 @@ public class TasksHandler {
      * @param taskUid Identifier of the Task
      * @param timeoutInMs number of milliseconds before throwing an Exception
      * @param intervalInMs number of milliseconds before requesting the status again
-     * @throws MeilisearchException if timeout is reached
+     * @throws MeilisearchTimeoutException if timeout is reached
      */
-    void waitForTask(int taskUid, int timeoutInMs, int intervalInMs) throws MeilisearchException {
+    void waitForTask(int taskUid, int timeoutInMs, int intervalInMs) {
         Task task;
         TaskStatus status = null;
         long startTime = new Date().getTime();

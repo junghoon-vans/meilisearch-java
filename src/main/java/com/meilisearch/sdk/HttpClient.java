@@ -54,10 +54,9 @@ public class HttpClient {
      *
      * @param api Path to document
      * @return document that was requested
-     * @throws MeilisearchException if the response is an error
+     * @throws MeilisearchApiException if the response is an error
      */
-    <T> T get(String api, Class<T> targetClass, Class<?>... parameters)
-            throws MeilisearchException {
+    <T> T get(String api, Class<T> targetClass, Class<?>... parameters) {
         return this.get(api, "", targetClass, parameters);
     }
 
@@ -67,10 +66,9 @@ public class HttpClient {
      * @param api Path to document
      * @param param Parameter to be passed
      * @return document that was requested
-     * @throws MeilisearchException if the response is an error
+     * @throws MeilisearchApiException if the response is an error
      */
-    <T> T get(String api, String param, Class<T> targetClass, Class<?>... parameters)
-            throws MeilisearchException {
+    <T> T get(String api, String param, Class<T> targetClass, Class<?>... parameters) {
         HttpRequest requestConfig = request.create(HttpMethod.GET, api + param, this.headers, null);
         HttpResponse<T> httpRequest = this.client.get(requestConfig);
         HttpResponse<T> httpResponse = response.create(httpRequest, targetClass, parameters);
@@ -88,9 +86,9 @@ public class HttpClient {
      * @param api Path to server
      * @param body Query for search
      * @return results of the search
-     * @throws MeilisearchException if the response is an error
+     * @throws MeilisearchApiException if the response is an error
      */
-    <S, T> T post(String api, S body, Class<T> targetClass) throws MeilisearchException {
+    <S, T> T post(String api, S body, Class<T> targetClass) {
         HttpRequest requestConfig = request.create(HttpMethod.POST, api, this.headers, body);
         HttpResponse<T> httpRequest = this.client.post(requestConfig);
         HttpResponse<T> httpResponse = response.create(httpRequest, targetClass);
@@ -108,9 +106,9 @@ public class HttpClient {
      * @param api Path to the requested resource
      * @param body Replacement data for the requested resource
      * @return updated resource
-     * @throws MeilisearchException if the response is an error
+     * @throws MeilisearchApiException if the response is an error
      */
-    <S, T> T put(String api, S body, Class<T> targetClass) throws MeilisearchException {
+    <S, T> T put(String api, S body, Class<T> targetClass) {
         HttpRequest requestConfig = request.create(HttpMethod.PUT, api, this.headers, body);
         HttpResponse<T> httpRequest = this.client.put(requestConfig);
         HttpResponse<T> httpResponse = response.create(httpRequest, targetClass);
@@ -128,9 +126,9 @@ public class HttpClient {
      * @param api Path to server
      * @param body Query for search
      * @return results of the search
-     * @throws MeilisearchException if the response is an error
+     * @throws MeilisearchApiException if the response is an error
      */
-    <S, T> T patch(String api, S body, Class<T> targetClass) throws MeilisearchException {
+    <S, T> T patch(String api, S body, Class<T> targetClass) {
         HttpRequest requestConfig = request.create(HttpMethod.PATCH, api, this.headers, body);
         HttpResponse<T> httpRequest = this.client.patch(requestConfig);
         HttpResponse<T> httpResponse = response.create(httpRequest, targetClass);
@@ -147,9 +145,9 @@ public class HttpClient {
      *
      * @param api Path to the requested resource
      * @return deleted resource
-     * @throws MeilisearchException if the response is an error
+     * @throws MeilisearchApiException if the response is an error
      */
-    <T> T delete(String api, Class<T> targetClass) throws MeilisearchException {
+    <T> T delete(String api, Class<T> targetClass) {
         HttpRequest requestConfig = request.create(HttpMethod.DELETE, api, this.headers, null);
         HttpResponse<T> httpRequest = this.client.delete(requestConfig);
         HttpResponse<T> httpResponse = response.create(httpRequest, targetClass);

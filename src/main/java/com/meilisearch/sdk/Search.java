@@ -28,9 +28,9 @@ public class Search {
      * @param uid Index identifier
      * @param q Query to search on index
      * @return search results, as raw data
-     * @throws MeilisearchException Search Exception or Client Error
+     * @throws MeilisearchApiException Search Exception or Client Error
      */
-    String rawSearch(String uid, String q) throws MeilisearchException {
+    String rawSearch(String uid, String q) {
         String requestQuery = "/indexes/" + uid + "/search";
         SearchRequest sr = SearchRequest.builder().q(q).build();
         return httpClient.post(requestQuery, sr, String.class);
@@ -42,9 +42,9 @@ public class Search {
      * @param uid Index identifier
      * @param sr SearchRequest to search on index
      * @return search results, as raw data
-     * @throws MeilisearchException Search Exception or Client Error
+     * @throws MeilisearchApiException Search Exception or Client Error
      */
-    String rawSearch(String uid, SearchRequest sr) throws MeilisearchException {
+    String rawSearch(String uid, SearchRequest sr) {
         String requestQuery = "/indexes/" + uid + "/search";
         return httpClient.post(requestQuery, sr.toString(), String.class);
     }
@@ -55,9 +55,9 @@ public class Search {
      * @param uid Index identifier
      * @param q Query to search on index
      * @return search results
-     * @throws MeilisearchException Search Exception or Client Error
+     * @throws MeilisearchApiException Search Exception or Client Error
      */
-    SearchResult search(String uid, String q) throws MeilisearchException {
+    SearchResult search(String uid, String q) {
         return httpClient.jsonHandler.decode(rawSearch(uid, q), SearchResult.class);
     }
 
@@ -67,9 +67,9 @@ public class Search {
      * @param uid Index identifier
      * @param sr SearchRequest to search on index
      * @return search results
-     * @throws MeilisearchException Search Exception or Client Error
+     * @throws MeilisearchApiException Search Exception or Client Error
      */
-    Searchable search(String uid, SearchRequest sr) throws MeilisearchException {
+    Searchable search(String uid, SearchRequest sr) {
         if (sr != null && (sr.getPage() != null || sr.getHitsPerPage() != null)) {
             return httpClient.jsonHandler.decode(rawSearch(uid, sr), SearchResultPaginated.class);
         }

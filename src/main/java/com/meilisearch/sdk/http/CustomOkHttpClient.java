@@ -2,7 +2,6 @@ package com.meilisearch.sdk.http;
 
 import com.meilisearch.sdk.Config;
 import com.meilisearch.sdk.exceptions.MeilisearchCommunicationException;
-import com.meilisearch.sdk.exceptions.MeilisearchException;
 import com.meilisearch.sdk.exceptions.MeilisearchTimeoutException;
 import com.meilisearch.sdk.http.request.HttpRequest;
 import com.meilisearch.sdk.http.response.HttpResponse;
@@ -31,14 +30,20 @@ public class CustomOkHttpClient {
         this.client = new OkHttpClient();
     }
 
-    public <T> HttpResponse<T> execute(HttpRequest request) throws MeilisearchException {
+    /**
+     * Executes the request and returns the response
+     * @param request {@link HttpRequest} to execute
+     * @return {@link HttpResponse}
+     * @param <T> the type of the response
+     * @throws MeilisearchTimeoutException if the request times out
+     * @throws MeilisearchCommunicationException if the {@link IOException} is occurred
+     */
+    public <T> HttpResponse<T> execute(HttpRequest request) {
         try {
             Request okRequest = buildRequest(request);
             Response response = client.newCall(okRequest).execute();
 
             return buildResponse(response);
-        } catch (MalformedURLException e) {
-            throw new MeilisearchException(e);
         } catch (SocketTimeoutException e) {
             throw new MeilisearchTimeoutException(e);
         } catch (IOException e) {
@@ -104,23 +109,23 @@ public class CustomOkHttpClient {
         return headerMap;
     }
 
-    public <T> HttpResponse<T> get(HttpRequest request) throws MeilisearchException {
+    public <T> HttpResponse<T> get(HttpRequest request) {
         return execute(request);
     }
 
-    public <T> HttpResponse<T> post(HttpRequest request) throws MeilisearchException {
+    public <T> HttpResponse<T> post(HttpRequest request) {
         return execute(request);
     }
 
-    public <T> HttpResponse<T> put(HttpRequest request) throws MeilisearchException {
+    public <T> HttpResponse<T> put(HttpRequest request) {
         return execute(request);
     }
 
-    public <T> HttpResponse<T> patch(HttpRequest request) throws MeilisearchException {
+    public <T> HttpResponse<T> patch(HttpRequest request) {
         return execute(request);
     }
 
-    public <T> HttpResponse<T> delete(HttpRequest request) throws MeilisearchException {
+    public <T> HttpResponse<T> delete(HttpRequest request) {
         return execute(request);
     }
 }

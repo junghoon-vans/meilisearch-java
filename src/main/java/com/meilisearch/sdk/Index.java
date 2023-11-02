@@ -1,6 +1,8 @@
 package com.meilisearch.sdk;
 
+import com.meilisearch.sdk.exceptions.MeilisearchApiException;
 import com.meilisearch.sdk.exceptions.MeilisearchException;
+import com.meilisearch.sdk.exceptions.MeilisearchTimeoutException;
 import com.meilisearch.sdk.model.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,11 +49,11 @@ public class Index implements Serializable {
      * @param identifier Identifier of the document to get
      * @param targetClass Class of the document returned
      * @return Object containing the requested document
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-one-document">API
      *     specification</a>
      */
-    public <T> T getDocument(String identifier, Class<T> targetClass) throws MeilisearchException {
+    public <T> T getDocument(String identifier, Class<T> targetClass) {
         return this.documents.<T>getDocument(this.uid, identifier, targetClass);
     }
 
@@ -63,12 +65,11 @@ public class Index implements Serializable {
      * @param param accepted by the get document route
      * @param targetClass Class of documents returned
      * @return Object containing the requested document
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-one-document">API
      *     specification</a>
      */
-    public <T> T getDocument(String identifier, DocumentQuery param, Class<T> targetClass)
-            throws MeilisearchException {
+    public <T> T getDocument(String identifier, DocumentQuery param, Class<T> targetClass) {
         return this.documents.<T>getDocument(this.uid, identifier, param, targetClass);
     }
 
@@ -77,11 +78,11 @@ public class Index implements Serializable {
      *
      * @param identifier Identifier of the document to get
      * @return String containing the requested document
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-one-document">API
      *     specification</a>
      */
-    public String getRawDocument(String identifier) throws MeilisearchException {
+    public String getRawDocument(String identifier) {
         return this.documents.getRawDocument(this.uid, identifier);
     }
 
@@ -91,12 +92,11 @@ public class Index implements Serializable {
      * @param identifier Identifier of the document to get
      * @param param accept by the documents route
      * @return String containing the requested document
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-one-document">API
      *     specification</a>
      */
-    public String getRawDocument(String identifier, DocumentQuery param)
-            throws MeilisearchException {
+    public String getRawDocument(String identifier, DocumentQuery param) {
         return this.documents.getRawDocument(this.uid, identifier, param);
     }
 
@@ -106,11 +106,11 @@ public class Index implements Serializable {
      * @param <T> Type of documents returned
      * @param targetClass Class of documents returned
      * @return Results containing a list of Object containing the requested document
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-documents">API
      *     specification</a>
      */
-    public <T> Results<T> getDocuments(Class<T> targetClass) throws MeilisearchException {
+    public <T> Results<T> getDocuments(Class<T> targetClass) {
         return this.documents.getDocuments(this.uid, targetClass);
     }
 
@@ -121,12 +121,11 @@ public class Index implements Serializable {
      * @param param accept by the documents route
      * @param targetClass Class of documents returned
      * @return Results containing a list of Object containing the requested document
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-documents">API
      *     specification</a>
      */
-    public <T> Results<T> getDocuments(DocumentsQuery param, Class<T> targetClass)
-            throws MeilisearchException {
+    public <T> Results<T> getDocuments(DocumentsQuery param, Class<T> targetClass) {
         return this.documents.getDocuments(this.uid, param, targetClass);
     }
 
@@ -134,11 +133,11 @@ public class Index implements Serializable {
      * Gets documents as String at the specified index
      *
      * @return String containing a list of documents
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-documents">API
      *     specification</a>
      */
-    public String getRawDocuments() throws MeilisearchException {
+    public String getRawDocuments() {
         return this.documents.getRawDocuments(this.uid);
     }
 
@@ -147,11 +146,11 @@ public class Index implements Serializable {
      *
      * @param param accept by the documents route
      * @return String containing a list of documents
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/documents#get-documents">API
      *     specification</a>
      */
-    public String getRawDocuments(DocumentsQuery param) throws MeilisearchException {
+    public String getRawDocuments(DocumentsQuery param) {
         return this.documents.getRawDocuments(this.uid, param);
     }
 
@@ -160,12 +159,12 @@ public class Index implements Serializable {
      *
      * @param document Document to add in JSON string format
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
-    public TaskInfo addDocuments(String document) throws MeilisearchException {
+    public TaskInfo addDocuments(String document) {
         return this.documents.addDocuments(this.uid, document, null);
     }
 
@@ -175,12 +174,12 @@ public class Index implements Serializable {
      * @param document Document to add in JSON string format
      * @param primaryKey PrimaryKey of the document to add
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
-    public TaskInfo addDocuments(String document, String primaryKey) throws MeilisearchException {
+    public TaskInfo addDocuments(String document, String primaryKey) {
         return this.documents.addDocuments(this.uid, document, primaryKey);
     }
 
@@ -191,13 +190,12 @@ public class Index implements Serializable {
      * @param document Document to add in JSON string format
      * @param primaryKey PrimaryKey of the document to add
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
-    public TaskInfo[] addDocumentsInBatches(String document, Integer batchSize, String primaryKey)
-            throws MeilisearchException {
+    public TaskInfo[] addDocumentsInBatches(String document, Integer batchSize, String primaryKey) {
 
         JSONArray jsonDocumentsArray = new JSONArray(document);
         JSONArray jsonSubArray = new JSONArray();
@@ -221,12 +219,12 @@ public class Index implements Serializable {
      *
      * @param document Document to add in JSON string format
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
-    public TaskInfo[] addDocumentsInBatches(String document) throws MeilisearchException {
+    public TaskInfo[] addDocumentsInBatches(String document) {
         return this.addDocumentsInBatches(document, 1000, null);
     }
 
@@ -235,12 +233,12 @@ public class Index implements Serializable {
      *
      * @param document Document to update in JSON string format
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
-    public TaskInfo updateDocuments(String document) throws MeilisearchException {
+    public TaskInfo updateDocuments(String document) {
         return this.documents.updateDocuments(this.uid, document, null);
     }
 
@@ -250,13 +248,12 @@ public class Index implements Serializable {
      * @param document Document to update in JSON string format
      * @param primaryKey PrimaryKey of the document
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
-    public TaskInfo updateDocuments(String document, String primaryKey)
-            throws MeilisearchException {
+    public TaskInfo updateDocuments(String document, String primaryKey) {
         return this.documents.updateDocuments(this.uid, document, primaryKey);
     }
 
@@ -267,13 +264,13 @@ public class Index implements Serializable {
      * @param batchSize size of the batch of documents
      * @param primaryKey PrimaryKey of the document to add
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
     public TaskInfo[] updateDocumentsInBatches(
-            String document, Integer batchSize, String primaryKey) throws MeilisearchException {
+            String document, Integer batchSize, String primaryKey) {
 
         JSONArray jsonDocumentsArray = new JSONArray(document);
         JSONArray jsonSubArray = new JSONArray();
@@ -297,12 +294,12 @@ public class Index implements Serializable {
      *
      * @param document Document to add in JSON string format
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#add-or-replace-documents">API
      *     specification</a>
      */
-    public TaskInfo[] updateDocumentsInBatches(String document) throws MeilisearchException {
+    public TaskInfo[] updateDocumentsInBatches(String document) {
         return this.updateDocumentsInBatches(document, 1000, null);
     }
 
@@ -311,12 +308,12 @@ public class Index implements Serializable {
      *
      * @param identifier Identifier of the document to delete
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#delete-one-document">API
      *     specification</a>
      */
-    public TaskInfo deleteDocument(String identifier) throws MeilisearchException {
+    public TaskInfo deleteDocument(String identifier) {
         return this.documents.deleteDocument(this.uid, identifier);
     }
 
@@ -325,12 +322,12 @@ public class Index implements Serializable {
      *
      * @param documentsIdentifiers list of identifiers of documents to delete
      * @return TaskInfo Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#delete-documents-by-batch">API
      *     specification</a>
      */
-    public TaskInfo deleteDocuments(List<String> documentsIdentifiers) throws MeilisearchException {
+    public TaskInfo deleteDocuments(List<String> documentsIdentifiers) {
         return this.documents.deleteDocuments(this.uid, documentsIdentifiers);
     }
 
@@ -338,12 +335,12 @@ public class Index implements Serializable {
      * Deletes all documents in the index
      *
      * @return List of tasks Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/documents#delete-all-documents">API
      *     specification</a>
      */
-    public TaskInfo deleteAllDocuments() throws MeilisearchException {
+    public TaskInfo deleteAllDocuments() {
         return this.documents.deleteAllDocuments(this.uid);
     }
 
@@ -352,12 +349,12 @@ public class Index implements Serializable {
      *
      * @param q Query string
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/search#search-in-an-index-with-post">API
      *     specification</a>
      */
-    public SearchResult search(String q) throws MeilisearchException {
+    public SearchResult search(String q) {
         return this.search.search(this.uid, q);
     }
 
@@ -366,20 +363,20 @@ public class Index implements Serializable {
      *
      * @param searchRequest SearchRequest SearchRequest
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/search#search-in-an-index-with-post">API
      *     specification</a>
      */
-    public Searchable search(SearchRequest searchRequest) throws MeilisearchException {
+    public Searchable search(SearchRequest searchRequest) {
         return this.search.search(this.uid, searchRequest);
     }
 
-    public String rawSearch(String query) throws MeilisearchException {
+    public String rawSearch(String query) {
         return this.search.rawSearch(this.uid, query);
     }
 
-    public String rawSearch(SearchRequest searchRequest) throws MeilisearchException {
+    public String rawSearch(SearchRequest searchRequest) {
         return this.search.rawSearch(this.uid, searchRequest);
     }
 
@@ -387,11 +384,11 @@ public class Index implements Serializable {
      * Gets the settings of the index
      *
      * @return settings of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#get-settings">API
      *     specification</a>
      */
-    public Settings getSettings() throws MeilisearchException {
+    public Settings getSettings() {
         return this.settingsHandler.getSettings(this.uid);
     }
 
@@ -400,11 +397,11 @@ public class Index implements Serializable {
      *
      * @param settings the object that contains the data with the new settings
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#update-settings">API
      *     specification</a>
      */
-    public TaskInfo updateSettings(Settings settings) throws MeilisearchException {
+    public TaskInfo updateSettings(Settings settings) {
         return this.settingsHandler.updateSettings(this.uid, settings);
     }
 
@@ -412,11 +409,11 @@ public class Index implements Serializable {
      * Resets the settings of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#reset-settings">API
      *     specification</a>
      */
-    public TaskInfo resetSettings() throws MeilisearchException {
+    public TaskInfo resetSettings() {
         return this.settingsHandler.resetSettings(this.uid);
     }
 
@@ -424,11 +421,11 @@ public class Index implements Serializable {
      * Gets the ranking rules settings of the index
      *
      * @return ranking rules of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#get-settings">API
      *     specification</a>
      */
-    public String[] getRankingRulesSettings() throws MeilisearchException {
+    public String[] getRankingRulesSettings() {
         return this.settingsHandler.getRankingRulesSettings(this.uid);
     }
 
@@ -437,11 +434,11 @@ public class Index implements Serializable {
      *
      * @param rankingRules array that contain the data with the new ranking rules
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#update-settings">API
      *     specification</a>
      */
-    public TaskInfo updateRankingRulesSettings(String[] rankingRules) throws MeilisearchException {
+    public TaskInfo updateRankingRulesSettings(String[] rankingRules) {
         return this.settingsHandler.updateRankingRulesSettings(this.uid, rankingRules);
     }
 
@@ -449,11 +446,11 @@ public class Index implements Serializable {
      * Resets the ranking rules settings of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#reset-settings">API
      *     specification</a>
      */
-    public TaskInfo resetRankingRulesSettings() throws MeilisearchException {
+    public TaskInfo resetRankingRulesSettings() {
         return this.settingsHandler.resetRankingRulesSettings(this.uid);
     }
 
@@ -461,11 +458,11 @@ public class Index implements Serializable {
      * Gets the synonyms settings of the index
      *
      * @return synonyms of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#get-synonyms">API
      *     specification</a>
      */
-    public Map<String, String[]> getSynonymsSettings() throws MeilisearchException {
+    public Map<String, String[]> getSynonymsSettings() {
         return this.settingsHandler.getSynonymsSettings(this.uid);
     }
 
@@ -474,12 +471,11 @@ public class Index implements Serializable {
      *
      * @param synonyms key (String) value (array) pair of synonyms
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#update-synonyms">API
      *     specification</a>
      */
-    public TaskInfo updateSynonymsSettings(Map<String, String[]> synonyms)
-            throws MeilisearchException {
+    public TaskInfo updateSynonymsSettings(Map<String, String[]> synonyms) {
         return this.settingsHandler.updateSynonymsSettings(this.uid, synonyms);
     }
 
@@ -487,11 +483,11 @@ public class Index implements Serializable {
      * Resets the synonyms settings of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#reset-synonyms">API
      *     specification</a>
      */
-    public TaskInfo resetSynonymsSettings() throws MeilisearchException {
+    public TaskInfo resetSynonymsSettings() {
         return this.settingsHandler.resetSynonymsSettings(this.uid);
     }
 
@@ -499,11 +495,11 @@ public class Index implements Serializable {
      * Gets the stop-words settings of the index
      *
      * @return stop-words of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#get-stop-words">API
      *     specification</a>
      */
-    public String[] getStopWordsSettings() throws MeilisearchException {
+    public String[] getStopWordsSettings() {
         return this.settingsHandler.getStopWordsSettings(this.uid);
     }
 
@@ -512,11 +508,11 @@ public class Index implements Serializable {
      *
      * @param stopWords An array of strings that contains the stop-words.
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#update-stop-words">API
      *     specification</a>
      */
-    public TaskInfo updateStopWordsSettings(String[] stopWords) throws MeilisearchException {
+    public TaskInfo updateStopWordsSettings(String[] stopWords) {
         return this.settingsHandler.updateStopWordsSettings(this.uid, stopWords);
     }
 
@@ -524,11 +520,11 @@ public class Index implements Serializable {
      * Resets the stop-words settings of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#reset-stop-words">API
      *     specification</a>
      */
-    public TaskInfo resetStopWordsSettings() throws MeilisearchException {
+    public TaskInfo resetStopWordsSettings() {
         return this.settingsHandler.resetStopWordsSettings(this.uid);
     }
 
@@ -536,12 +532,12 @@ public class Index implements Serializable {
      * Gets the searchable attributes of the index
      *
      * @return searchable attributes of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#get-searchable-attributes">API
      *     specification</a>
      */
-    public String[] getSearchableAttributesSettings() throws MeilisearchException {
+    public String[] getSearchableAttributesSettings() {
         return this.settingsHandler.getSearchableAttributesSettings(this.uid);
     }
 
@@ -550,13 +546,12 @@ public class Index implements Serializable {
      *
      * @param searchableAttributes An array of strings that contains the searchable attributes.
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#update-searchable-attributes">API
      *     specification</a>
      */
-    public TaskInfo updateSearchableAttributesSettings(String[] searchableAttributes)
-            throws MeilisearchException {
+    public TaskInfo updateSearchableAttributesSettings(String[] searchableAttributes) {
         return this.settingsHandler.updateSearchableAttributesSettings(
                 this.uid, searchableAttributes);
     }
@@ -565,12 +560,12 @@ public class Index implements Serializable {
      * Resets the searchable attributes of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#reset-searchable-attributes">API
      *     specification</a>
      */
-    public TaskInfo resetSearchableAttributesSettings() throws MeilisearchException {
+    public TaskInfo resetSearchableAttributesSettings() {
         return this.settingsHandler.resetSearchableAttributesSettings(this.uid);
     }
 
@@ -578,12 +573,12 @@ public class Index implements Serializable {
      * Gets the display attributes of the index
      *
      * @return display attributes of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#get-displayed-attributes">API
      *     specification</a>
      */
-    public String[] getDisplayedAttributesSettings() throws MeilisearchException {
+    public String[] getDisplayedAttributesSettings() {
         return this.settingsHandler.getDisplayedAttributesSettings(this.uid);
     }
 
@@ -592,13 +587,12 @@ public class Index implements Serializable {
      *
      * @param displayAttributes An array of strings that contains attributes of an index to display
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#update-displayed-attributes">API
      *     specification</a>
      */
-    public TaskInfo updateDisplayedAttributesSettings(String[] displayAttributes)
-            throws MeilisearchException {
+    public TaskInfo updateDisplayedAttributesSettings(String[] displayAttributes) {
         return this.settingsHandler.updateDisplayedAttributesSettings(this.uid, displayAttributes);
     }
 
@@ -606,12 +600,12 @@ public class Index implements Serializable {
      * Resets the displayed attributes of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#reset-displayed-attributes">API
      *     specification</a>
      */
-    public TaskInfo resetDisplayedAttributesSettings() throws MeilisearchException {
+    public TaskInfo resetDisplayedAttributesSettings() {
         return this.settingsHandler.resetDisplayedAttributesSettings(this.uid);
     }
 
@@ -619,12 +613,12 @@ public class Index implements Serializable {
      * Gets the filterable attributes of the index
      *
      * @return filterable attributes of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#get-filterable-attributes">API
      *     specification</a>
      */
-    public String[] getFilterableAttributesSettings() throws MeilisearchException {
+    public String[] getFilterableAttributesSettings() {
         return this.settingsHandler.getFilterableAttributesSettings(this.uid);
     }
 
@@ -634,13 +628,12 @@ public class Index implements Serializable {
      * @param filterableAttributes An array of strings containing the attributes that can be used as
      *     filters at query time.
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#update-filterable-attributes">API
      *     specification</a>
      */
-    public TaskInfo updateFilterableAttributesSettings(String[] filterableAttributes)
-            throws MeilisearchException {
+    public TaskInfo updateFilterableAttributesSettings(String[] filterableAttributes) {
         return this.settingsHandler.updateFilterableAttributesSettings(
                 this.uid, filterableAttributes);
     }
@@ -649,25 +642,24 @@ public class Index implements Serializable {
      * Resets the filterable attributes of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#reset-filterable-attributes">API
      *     specification</a>
      */
-    public TaskInfo resetFilterableAttributesSettings() throws MeilisearchException {
+    public TaskInfo resetFilterableAttributesSettings() {
         return this.settingsHandler.resetFilterableAttributesSettings(this.uid);
     }
 
-    public String[] getSortableAttributesSettings() throws MeilisearchException {
+    public String[] getSortableAttributesSettings() {
         return this.settingsHandler.getSortableAttributesSettings(this.uid);
     }
 
-    public TaskInfo updateSortableAttributesSettings(String[] sortableAttributes)
-            throws MeilisearchException {
+    public TaskInfo updateSortableAttributesSettings(String[] sortableAttributes) {
         return this.settingsHandler.updateSortableAttributesSettings(this.uid, sortableAttributes);
     }
 
-    public TaskInfo resetSortableAttributesSettings() throws MeilisearchException {
+    public TaskInfo resetSortableAttributesSettings() {
         return this.settingsHandler.resetSortableAttributesSettings(this.uid);
     }
 
@@ -675,12 +667,12 @@ public class Index implements Serializable {
      * Gets the distinct attribute field of the index
      *
      * @return distinct attribute field of a given uid as String
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#get-distinct-attribute">API
      *     specification</a>
      */
-    public String getDistinctAttributeSettings() throws MeilisearchException {
+    public String getDistinctAttributeSettings() {
         return this.settingsHandler.getDistinctAttributeSettings(this.uid);
     }
 
@@ -689,13 +681,12 @@ public class Index implements Serializable {
      *
      * @param distinctAttribute A String: the field name.
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#update-distinct-attribute">API
      *     specification</a>
      */
-    public TaskInfo updateDistinctAttributeSettings(String distinctAttribute)
-            throws MeilisearchException {
+    public TaskInfo updateDistinctAttributeSettings(String distinctAttribute) {
         return this.settingsHandler.updateDistinctAttributeSettings(this.uid, distinctAttribute);
     }
 
@@ -703,12 +694,12 @@ public class Index implements Serializable {
      * Resets the distinct attribute field of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#reset-distinct-attribute">API
      *     specification</a>
      */
-    public TaskInfo resetDistinctAttributeSettings() throws MeilisearchException {
+    public TaskInfo resetDistinctAttributeSettings() {
         return this.settingsHandler.resetDistinctAttributeSettings(this.uid);
     }
 
@@ -716,11 +707,11 @@ public class Index implements Serializable {
      * Gets the typo tolerance field of the index
      *
      * @return TypoTolerance instance from Index
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/settings#get-typo-tolerance">API
      *     specification</a>
      */
-    public TypoTolerance getTypoToleranceSettings() throws MeilisearchException {
+    public TypoTolerance getTypoToleranceSettings() {
         return this.settingsHandler.getTypoToleranceSettings(this.uid);
     }
 
@@ -729,13 +720,12 @@ public class Index implements Serializable {
      *
      * @param typoTolerance A TypoTolerance instance
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#update-typo-tolerance">API
      *     specification</a>
      */
-    public TaskInfo updateTypoToleranceSettings(TypoTolerance typoTolerance)
-            throws MeilisearchException {
+    public TaskInfo updateTypoToleranceSettings(TypoTolerance typoTolerance) {
         return this.settingsHandler.updateTypoToleranceSettings(this.uid, typoTolerance);
     }
 
@@ -743,12 +733,12 @@ public class Index implements Serializable {
      * Resets the typo tolerance field of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#reset-typo-tolerance">API
      *     specification</a>
      */
-    public TaskInfo resetTypoToleranceSettings() throws MeilisearchException {
+    public TaskInfo resetTypoToleranceSettings() {
         return this.settingsHandler.resetTypoToleranceSettings(this.uid);
     }
 
@@ -756,12 +746,12 @@ public class Index implements Serializable {
      * Gets the pagination field of the index
      *
      * @return Pagination instance from Index
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#get-pagination-settings">API
      *     specification</a>
      */
-    public Pagination getPaginationSettings() throws MeilisearchException {
+    public Pagination getPaginationSettings() {
         return this.settingsHandler.getPaginationSettings(this.uid);
     }
 
@@ -770,12 +760,12 @@ public class Index implements Serializable {
      *
      * @param pagination A pagination instance
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#update-pagination-settings">API
      *     specification</a>
      */
-    public TaskInfo updatePaginationSettings(Pagination pagination) throws MeilisearchException {
+    public TaskInfo updatePaginationSettings(Pagination pagination) {
         return this.settingsHandler.updatePaginationSettings(this.uid, pagination);
     }
 
@@ -783,12 +773,12 @@ public class Index implements Serializable {
      * Resets the pagination field of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#reset-pagination-settings">API
      *     specification</a>
      */
-    public TaskInfo resetPaginationSettings() throws MeilisearchException {
+    public TaskInfo resetPaginationSettings() {
         return this.settingsHandler.resetPaginationSettings(this.uid);
     }
 
@@ -796,12 +786,12 @@ public class Index implements Serializable {
      * Gets the faceting field of the index
      *
      * @return Faceting instance from Index
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#get-faceting-settings">API
      *     specification</a>
      */
-    public Faceting getFacetingSettings() throws MeilisearchException {
+    public Faceting getFacetingSettings() {
         return this.settingsHandler.getFacetingSettings(this.uid);
     }
 
@@ -810,12 +800,12 @@ public class Index implements Serializable {
      *
      * @param faceting A faceting instance
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/en/reference/api/settings#update-faceting-settings">API
      *     specification</a>
      */
-    public TaskInfo updateFacetingSettings(Faceting faceting) throws MeilisearchException {
+    public TaskInfo updateFacetingSettings(Faceting faceting) {
         return this.settingsHandler.updateFacetingSettings(this.uid, faceting);
     }
 
@@ -823,12 +813,12 @@ public class Index implements Serializable {
      * Resets the faceting field of the index
      *
      * @return TaskInfo instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a
      *     href="https://www.meilisearch.com/docs/reference/api/settings#reset-faceting-settings">API
      *     specification</a>
      */
-    public TaskInfo resetFacetingSettings() throws MeilisearchException {
+    public TaskInfo resetFacetingSettings() {
         return this.settingsHandler.resetFacetingSettings(this.uid);
     }
 
@@ -836,11 +826,11 @@ public class Index implements Serializable {
      * Gets extended information and metrics about indexes and the Meilisearch database
      *
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/stats#get-stats">API
      *     specification</a>
      */
-    public IndexStats getStats() throws MeilisearchException {
+    public IndexStats getStats() {
         return this.instanceHandler.getIndexStats(this.uid);
     }
 
@@ -849,11 +839,11 @@ public class Index implements Serializable {
      *
      * @param taskId Identifier of the requested index task
      * @return Task instance
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/tasks#get-one-task">API
      *     specification</a>
      */
-    public Task getTask(int taskId) throws MeilisearchException {
+    public Task getTask(int taskId) {
         return this.tasksHandler.getTask(taskId);
     }
 
@@ -861,11 +851,11 @@ public class Index implements Serializable {
      * Retrieves list of tasks of the index
      *
      * @return List of tasks in the Meilisearch index
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/tasks#get-tasks">API
      *     specification</a>
      */
-    public TasksResults getTasks() throws MeilisearchException {
+    public TasksResults getTasks() {
         return this.tasksHandler.getTasks(this.uid);
     }
 
@@ -874,11 +864,11 @@ public class Index implements Serializable {
      *
      * @param param accept by the tasks route
      * @return List of tasks in the Meilisearch index
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/tasks#get-tasks">API
      *     specification</a>
      */
-    public TasksResults getTasks(TasksQuery param) throws MeilisearchException {
+    public TasksResults getTasks(TasksQuery param) {
         return this.tasksHandler.getTasks(this.uid, param);
     }
 
@@ -886,11 +876,11 @@ public class Index implements Serializable {
      * Waits for a task to be processed
      *
      * @param taskId Identifier of the requested Task
-     * @throws MeilisearchException if an error occurs or if timeout is reached
+     * @throws MeilisearchTimeoutException if an error occurs or if timeout is reached
      * @see <a href="https://www.meilisearch.com/docs/reference/api/tasks#task-status">API
      *     specification</a>
      */
-    public void waitForTask(int taskId) throws MeilisearchException {
+    public void waitForTask(int taskId) {
         this.tasksHandler.waitForTask(taskId, 5000, 50);
     }
 
@@ -900,21 +890,20 @@ public class Index implements Serializable {
      * @param taskId ID of the index update
      * @param timeoutInMs number of milliseconds before throwing an Exception
      * @param intervalInMs number of milliseconds before requesting the status again
-     * @throws MeilisearchException if an error occurs or if timeout is reached
+     * @throws MeilisearchTimeoutException if an error occurs or if timeout is reached
      * @see <a href="https://www.meilisearch.com/docs/reference/api/tasks#task-status">API
      *     specification</a>
      */
-    public void waitForTask(int taskId, int timeoutInMs, int intervalInMs)
-            throws MeilisearchException {
+    public void waitForTask(int taskId, int timeoutInMs, int intervalInMs) {
         this.tasksHandler.waitForTask(taskId, timeoutInMs, intervalInMs);
     }
 
     /**
      * Fetches the primary key of the index in the Meilisearch instance
      *
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      */
-    public void fetchPrimaryKey() throws MeilisearchException {
+    public void fetchPrimaryKey() {
         String requestQuery = "/indexes/" + this.uid;
         HttpClient httpClient = config.httpClient;
         Index retrievedIndex = httpClient.get(requestQuery, Index.class);

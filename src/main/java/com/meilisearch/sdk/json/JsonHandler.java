@@ -1,14 +1,15 @@
 package com.meilisearch.sdk.json;
 
-import com.meilisearch.sdk.exceptions.MeilisearchException;
+import com.meilisearch.sdk.exceptions.JsonDecodingException;
+import com.meilisearch.sdk.exceptions.JsonEncodingException;
 
 public interface JsonHandler {
     /**
      * @param o the Object to serialize
      * @return the serialized Object {@code o}
-     * @throws MeilisearchException wrapped exceptions of the used json library
+     * @throws JsonEncodingException if object cannot be serialized
      */
-    String encode(Object o) throws MeilisearchException;
+    String encode(Object o);
 
     /**
      * @param o Object to deserialize, most of the time this is a string
@@ -17,8 +18,7 @@ public interface JsonHandler {
      *     with that generic.
      * @param <T> Abstract type to deserialize
      * @return the deserialized object
-     * @throws MeilisearchException wrapped exceptions of the used json library
+     * @throws JsonDecodingException if object cannot be deserialized
      */
-    <T> T decode(Object o, Class<?> targetClass, Class<?>... parameters)
-            throws MeilisearchException;
+    <T> T decode(Object o, Class<?> targetClass, Class<?>... parameters);
 }

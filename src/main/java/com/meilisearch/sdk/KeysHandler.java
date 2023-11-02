@@ -1,5 +1,6 @@
 package com.meilisearch.sdk;
 
+import com.meilisearch.sdk.exceptions.MeilisearchApiException;
 import com.meilisearch.sdk.exceptions.MeilisearchException;
 import com.meilisearch.sdk.http.URLBuilder;
 import com.meilisearch.sdk.model.Key;
@@ -29,9 +30,9 @@ public class KeysHandler {
      *
      * @param uid Identifier of the requested Key
      * @return Key instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    Key getKey(String uid) throws MeilisearchException {
+    Key getKey(String uid) {
         return httpClient.get(keysPath().addSubroute(uid).getURL(), Key.class);
     }
 
@@ -39,9 +40,9 @@ public class KeysHandler {
      * Retrieves keys from the client
      *
      * @return Results containing a list of Key instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    Results<Key> getKeys() throws MeilisearchException {
+    Results<Key> getKeys() {
         return httpClient.get(keysPath().getURL(), Results.class, Key.class);
     }
 
@@ -50,9 +51,9 @@ public class KeysHandler {
      *
      * @param params accept by the keys route
      * @return Results containing a list of Key instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    Results<Key> getKeys(KeysQuery params) throws MeilisearchException {
+    Results<Key> getKeys(KeysQuery params) {
         return httpClient.get(
                 keysPath().addQuery(params.toQuery()).getURL(), Results.class, Key.class);
     }
@@ -62,9 +63,9 @@ public class KeysHandler {
      *
      * @param options Key containing the options
      * @return Key Instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    Key createKey(Key options) throws MeilisearchException {
+    Key createKey(Key options) {
         return httpClient.post(keysPath().getURL(), options, Key.class);
     }
 
@@ -74,9 +75,9 @@ public class KeysHandler {
      * @param key String containing the key
      * @param options String containing the options of the key
      * @return Key Instance
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    Key updateKey(String key, KeyUpdate options) throws MeilisearchException {
+    Key updateKey(String key, KeyUpdate options) {
         return httpClient.patch(keysPath().addSubroute(key).getURL(), options, Key.class);
     }
 
@@ -84,9 +85,9 @@ public class KeysHandler {
      * Deletes a key
      *
      * @param key String containing the key
-     * @throws MeilisearchException if client request causes an error
+     * @throws MeilisearchApiException if client request causes an error
      */
-    void deleteKey(String key) throws MeilisearchException {
+    void deleteKey(String key) {
         httpClient.delete(keysPath().addSubroute(key).getURL(), String.class);
     }
 

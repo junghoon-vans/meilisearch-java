@@ -21,10 +21,10 @@ public class InstanceHandler {
      * Gets the status and availability of a Meilisearch instance
      *
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/health">API specification</a>
      */
-    String health() throws MeilisearchException {
+    String health() {
         return httpClient.get("/health", String.class);
     }
 
@@ -32,10 +32,10 @@ public class InstanceHandler {
      * Gets the status and availability of a Meilisearch instance
      *
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/health">API specification</a>
      */
-    boolean isHealthy() throws MeilisearchException {
+    boolean isHealthy() {
         try {
             this.health();
             return true;
@@ -48,10 +48,10 @@ public class InstanceHandler {
      * Gets extended information and metrics about indexes and the Meilisearch database
      *
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/stats">API specification</a>
      */
-    Stats getStats() throws MeilisearchException {
+    Stats getStats() {
         return httpClient.get("/stats", Stats.class);
     }
 
@@ -60,10 +60,10 @@ public class InstanceHandler {
      *
      * @param uid Index identifier to the requested
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/stats">API specification</a>
      */
-    IndexStats getIndexStats(String uid) throws MeilisearchException {
+    IndexStats getIndexStats(String uid) {
         String requestQuery = "/indexes/" + uid + "/stats";
         return httpClient.<IndexStats>get(requestQuery, IndexStats.class);
     }
@@ -72,10 +72,10 @@ public class InstanceHandler {
      * Gets the version of Meilisearch instance
      *
      * @return Meilisearch API response
-     * @throws MeilisearchException if an error occurs
+     * @throws MeilisearchApiException if an error occurs
      * @see <a href="https://www.meilisearch.com/docs/reference/api/version">API specification</a>
      */
-    String getVersion() throws MeilisearchException {
+    String getVersion() {
         return httpClient.get("/version", String.class);
     }
 }
